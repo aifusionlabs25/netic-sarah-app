@@ -87,7 +87,6 @@ export async function POST(request: Request) {
         enable_recording: true,
         participant_absent_timeout: 60, // 1 Minute
         participant_left_timeout: 60, // 1 Minute
-        voice_id: process.env.TAVUS_VOICE_ID, // Sarah/Netic Dedicated Voice
         // Merge in client-provided properties (Identity, etc)
         ...(properties || {})
       },
