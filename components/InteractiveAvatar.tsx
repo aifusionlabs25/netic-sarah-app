@@ -272,15 +272,23 @@ export default function InteractiveAvatar() {
                         <div className="flex items-center gap-3">
                             {!conversation && (
                                 <>
-                                    <button onClick={openCalendly} className="gd-btn" type="button">
+                                    <a
+                                        href="https://www.netic.ai/book-a-demo"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="gd-btn hover:bg-emerald-800 transition-colors"
+                                    >
                                         <IconCalendar className="h-4 w-4" />
                                         <span>Schedule Demo</span>
-                                    </button>
+                                    </a>
 
-                                    <button onClick={() => setShowContactForm(true)} className="gd-btn" type="button">
+                                    <a
+                                        href="mailto:hello@netic.ai"
+                                        className="gd-btn hover:bg-emerald-800 transition-colors"
+                                    >
                                         <IconMail className="h-4 w-4" />
                                         <span>Contact Us</span>
-                                    </button>
+                                    </a>
                                 </>
                             )}
 
