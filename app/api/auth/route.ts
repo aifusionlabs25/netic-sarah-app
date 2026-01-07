@@ -5,15 +5,11 @@ export async function POST(request: Request) {
         const body = await request.json()
         const { name, email, token } = body
 
-        // 1. Get the secret token from environment
-        const validToken = process.env.DEMO_ACCESS_TOKEN
-        if (!validToken) {
-            console.error('CRITICAL: DEMO_ACCESS_TOKEN not configured')
-            return NextResponse.json({ success: false, message: 'System Error: Auth config missing' }, { status: 500 })
-        }
+        // 1. Get the secret token (Fallback to 'Sarah' for immediate demo use)
+        const validToken = process.env.DEMO_ACCESS_TOKEN || 'Sarah'
 
-        // 2. Validate Access Token
-        if (token !== validToken) {
+        // 2. Validate Access Token (Case-Insensitive)
+        if (!token || token.trim().toLowerCase() !== validToken.toLowerCase()) {
             console.log(`❌ Access denied for: ${name} (Invalid Token)`)
             return NextResponse.json({ success: false, message: 'Invalid Access Code' }, { status: 401 })
         }

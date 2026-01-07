@@ -127,193 +127,151 @@ export default function AccessGate({ children }: AccessGateProps) {
 
     // Not authenticated - show login
     return (
+    // Not authenticated - show login
+    return (
         <>
-            <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center p-4">
-                <div className="w-full max-w-md">
-                    {/* Sarah's Portrait */}
-                    <div className="relative w-32 h-32 mx-auto mb-6">
-                        <div className="absolute inset-0 bg-sky-500/20 blur-xl rounded-full"></div>
-                        <img
-                            src="/sarah-welcome.png"
-                            alt="Sarah"
-                            className="relative w-full h-full object-cover rounded-full border-2 border-sky-500/30 shadow-2xl"
-                        />
-                    </div>
+            <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-[#0B3B28]">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 opacity-10 pointer-events-none">
+                    <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                        <path d="M0 100 C 20 0 50 0 100 100 Z" fill="#ffffff" />
+                    </svg>
+                </div>
 
-                    {/* Branding */}
-                    <div className="text-center mb-8">
-                        <div className="flex items-center justify-center mb-2">
-                            <span className="px-3 py-1 bg-sky-500/10 border border-sky-500/20 rounded-full text-xs font-medium text-sky-400 tracking-wider uppercase">
-                                Powered by Netic.ai
-                            </span>
+                <div className="w-full max-w-lg relative z-10">
+                    {/* Header Section */}
+                    <div className="text-center mb-10">
+                        {/* Netic Brand Mark */}
+                        <div className="flex items-center justify-center mb-6">
+                            <h2 className="text-3xl font-serif font-medium tracking-tight text-white">netic</h2>
                         </div>
-                        <h1 className="text-3xl font-light text-white tracking-wide">
+
+                        {/* Sarah Avatar */}
+                        <div className="relative w-28 h-28 mx-auto mb-6">
+                            <div className="absolute inset-0 bg-emerald-900/40 rounded-full"></div>
+                            <img
+                                src="/sarah-welcome.png"
+                                alt="Sarah"
+                                className="relative w-full h-full object-cover rounded-full border border-white/20 shadow-2xl"
+                            />
+                        </div>
+
+                        <h1 className="text-5xl font-serif font-normal text-white mb-4">
                             Sarah
                         </h1>
-                        <p className="text-slate-400 mt-3 text-sm font-light">
-                            Enter your verified credentials to begin
+                        <p className="text-emerald-100/80 text-lg font-light max-w-sm mx-auto font-sans">
+                            Your complete autonomous revenue engine.
                         </p>
                     </div>
 
                     {/* Login Form */}
-                    <form onSubmit={handleSubmit} className="bg-slate-900/40 backdrop-blur-md rounded-2xl p-8 border border-white/5 shadow-2xl relative overflow-hidden group">
-                        {/* Glow Effect */}
-                        <div className="absolute -top-20 -right-20 w-40 h-40 bg-sky-500/10 blur-3xl rounded-full group-hover:bg-sky-500/20 transition-all duration-700"></div>
+                    <form onSubmit={handleSubmit} className="space-y-4 max-w-sm mx-auto">
+                        <div className="space-y-4">
+                            <input
+                                type="text"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder="Your Name"
+                                required
+                                className="w-full px-6 py-4 bg-[#0A2F20] border border-emerald-800/50 rounded-full text-white placeholder-emerald-100/30 focus:outline-none focus:ring-1 focus:ring-emerald-400/50 transition-all text-center font-sans"
+                            />
 
-                        <div className="space-y-5 relative z-10">
-                            <div>
-                                <label className="block text-xs uppercase tracking-wider font-semibold text-slate-400 mb-2 ml-1">
-                                    Your Name
-                                </label>
-                                <input
-                                    type="text"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    placeholder="Enter your name"
-                                    required
-                                    className="w-full px-4 py-3 bg-slate-950/80 border border-slate-700/50 rounded-lg text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500/50 transition-all"
-                                />
-                            </div>
+                            <input
+                                type="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Work Email"
+                                required
+                                className="w-full px-6 py-4 bg-[#0A2F20] border border-emerald-800/50 rounded-full text-white placeholder-emerald-100/30 focus:outline-none focus:ring-1 focus:ring-emerald-400/50 transition-all text-center font-sans"
+                            />
 
-                            <div>
-                                <label className="block text-xs uppercase tracking-wider font-semibold text-slate-400 mb-2 ml-1">
-                                    Work Email
-                                </label>
-                                <input
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    placeholder="name@company.com"
-                                    required
-                                    className="w-full px-4 py-3 bg-slate-950/80 border border-slate-700/50 rounded-lg text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500/50 transition-all"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-xs uppercase tracking-wider font-semibold text-slate-400 mb-2 ml-1">
-                                    Access Code
-                                </label>
-                                <input
-                                    type="password"
-                                    value={token}
-                                    onChange={(e) => setToken(e.target.value)}
-                                    placeholder="Enter access code"
-                                    required
-                                    className="w-full px-4 py-3 bg-slate-950/80 border border-slate-700/50 rounded-lg text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500/50 transition-all"
-                                />
-                            </div>
-
-                            {error && (
-                                <div className="text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-2 text-center">
-                                    {error}
-                                </div>
-                            )}
-
-                            <button
-                                type="submit"
-                                disabled={loading || !name || !email || !token}
-                                className="w-full py-3.5 bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 text-white font-medium rounded-lg shadow-lg shadow-sky-500/20 hover:shadow-sky-500/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wide text-sm"
-                            >
-                                {loading ? 'Verifying...' : 'Initialize Session'}
-                            </button>
+                            <input
+                                type="password"
+                                value={token}
+                                onChange={(e) => setToken(e.target.value)}
+                                placeholder="Access Code"
+                                required
+                                className="w-full px-6 py-4 bg-[#0A2F20] border border-emerald-800/50 rounded-full text-white placeholder-emerald-100/30 focus:outline-none focus:ring-1 focus:ring-emerald-400/50 transition-all text-center font-sans"
+                            />
                         </div>
+
+                        {error && (
+                            <div className="text-white text-sm bg-red-500/20 border border-red-500/30 rounded-full px-6 py-2 text-center">
+                                {error}
+                            </div>
+                        )}
+
+                        <button
+                            type="submit"
+                            disabled={loading || !name || !email || !token}
+                            className="w-full py-4 bg-white hover:bg-emerald-50 text-[#0B3B28] font-medium rounded-full shadow-lg transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed mt-4 font-sans tracking-wide"
+                        >
+                            {loading ? 'Authenticating...' : 'Initialize Session'}
+                        </button>
                     </form>
 
-                    <p className="text-center text-slate-500 text-xs mt-8">
-                        Need access? <button onClick={() => setIsRequestOpen(true)} className="text-sky-400 hover:text-sky-300 transition-colors">Request Invite</button>
-                    </p>
+                    <div className="mt-12 text-center space-y-4">
+                        <button onClick={() => setIsRequestOpen(true)} className="text-emerald-200/60 hover:text-white text-sm transition-colors font-sans">
+                            Request Access
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            {/* Request Access Modal */}
+            {/* Request Access Modal - Themed */}
             {mounted && isRequestOpen && createPortal(
-                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-                    <div className="bg-slate-900 border border-slate-700 rounded-2xl p-8 w-full max-w-md shadow-2xl relative">
-                        {/* Close Button */}
+                <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-[#051c13]/90 backdrop-blur-sm">
+                    <div className="bg-[#0B3B28] border border-emerald-800 rounded-3xl p-10 w-full max-w-md shadow-2xl relative">
                         <button
                             onClick={() => setIsRequestOpen(false)}
-                            className="absolute top-4 right-4 text-slate-500 hover:text-white transition-colors"
+                            className="absolute top-6 right-6 text-emerald-400/50 hover:text-white transition-colors"
                         >
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
                             </svg>
                         </button>
 
-                        <h2 className="text-2xl font-light text-white mb-2">Request Access</h2>
-                        <p className="text-slate-400 text-sm mb-6">Enter your details and we'll send you an access code.</p>
+                        <h2 className="text-3xl font-serif text-white mb-2">Request Access</h2>
+                        <p className="text-emerald-100/60 text-sm mb-8 font-sans">Join the autonomous revolution.</p>
 
                         {reqSuccess ? (
                             <div className="text-center py-8">
-                                <div className="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <svg className="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                                    </svg>
-                                </div>
-                                <h3 className="text-xl text-white mb-2">Request Sent!</h3>
-                                <p className="text-slate-400 text-sm">We'll review your info and email you shortly.</p>
+                                <h3 className="text-xl font-serif text-white mb-2">Request Sent</h3>
+                                <p className="text-emerald-100/60 text-sm font-sans">We will be in touch shortly.</p>
                                 <button
                                     onClick={() => setIsRequestOpen(false)}
-                                    className="mt-6 w-full py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-lg transition-colors"
+                                    className="mt-8 px-8 py-3 bg-white text-[#0B3B28] rounded-full font-medium transition-colors font-sans"
                                 >
                                     Close
                                 </button>
                             </div>
                         ) : (
                             <form onSubmit={handleRequestSubmit} className="space-y-4">
-                                <div>
-                                    <input
-                                        type="text"
-                                        placeholder="Full Name *"
-                                        value={reqName}
-                                        onChange={e => setReqName(e.target.value)}
-                                        required
-                                        className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none"
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="text"
-                                        placeholder="Company Name"
-                                        value={reqCompany}
-                                        onChange={e => setReqCompany(e.target.value)}
-                                        className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none"
-                                    />
-                                </div>
-                                <div>
-                                    <input
-                                        type="text"
-                                        placeholder="Company Website"
-                                        value={reqWebsite}
-                                        onChange={e => setReqWebsite(e.target.value)}
-                                        className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none"
-                                    />
-                                </div>
-                                <div className="grid grid-cols-2 gap-4">
-                                    <input
-                                        type="tel"
-                                        placeholder="Phone"
-                                        value={reqPhone}
-                                        onChange={e => setReqPhone(e.target.value)}
-                                        className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none"
-                                    />
-                                    <input
-                                        type="email"
-                                        placeholder="Email *"
-                                        value={reqEmail}
-                                        onChange={e => setReqEmail(e.target.value)}
-                                        required
-                                        className="w-full px-4 py-3 bg-slate-950 border border-slate-700 rounded-lg text-white focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none"
-                                    />
-                                </div>
+                                <input
+                                    type="text"
+                                    placeholder="Full Name"
+                                    value={reqName}
+                                    onChange={e => setReqName(e.target.value)}
+                                    required
+                                    className="w-full px-6 py-3 bg-[#0A2F20] border border-emerald-800/50 rounded-full text-white placeholder-emerald-100/30 focus:outline-none focus:ring-1 focus:ring-emerald-400/50 transition-all font-sans"
+                                />
+                                <input
+                                    type="email"
+                                    placeholder="Company Email"
+                                    value={reqEmail}
+                                    onChange={e => setReqEmail(e.target.value)}
+                                    required
+                                    className="w-full px-6 py-3 bg-[#0A2F20] border border-emerald-800/50 rounded-full text-white placeholder-emerald-100/30 focus:outline-none focus:ring-1 focus:ring-emerald-400/50 transition-all font-sans"
+                                />
 
-                                {reqError && <p className="text-red-400 text-sm">{reqError}</p>}
+                                {reqError && <p className="text-red-300 text-sm text-center">{reqError}</p>}
 
                                 <button
                                     type="submit"
                                     disabled={reqLoading}
-                                    className="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-lg shadow-lg shadow-emerald-500/20 transition-all disabled:opacity-50"
+                                    className="w-full py-3 bg-white hover:bg-emerald-50 text-[#0B3B28] font-medium rounded-full shadow-lg transition-all disabled:opacity-50 mt-4 font-sans"
                                 >
-                                    {reqLoading ? 'Sending...' : 'Send Request'}
+                                    {reqLoading ? 'Sending...' : 'Submit Request'}
                                 </button>
                             </form>
                         )}
