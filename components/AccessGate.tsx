@@ -127,8 +127,6 @@ export default function AccessGate({ children }: AccessGateProps) {
 
     // Not authenticated - show login
     return (
-    // Not authenticated - show login
-    return (
         <>
             <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden bg-[#0B3B28]">
                 {/* Background Pattern */}
