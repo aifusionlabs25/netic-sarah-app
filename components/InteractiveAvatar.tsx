@@ -246,11 +246,18 @@ export default function InteractiveAvatar() {
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-3 hover:opacity-85 transition-opacity"
                             >
-                                {/* Netic Logo */}
-                                {/* CSS Logo Replacement */}
-                                <span className="font-sans text-3xl font-bold text-white tracking-tighter leading-none select-none">
-                                    N
-                                </span>
+                                {/* Netic SVG Wordmark per Nova */}
+                                <div className="flex items-center gap-2">
+                                    {/* The Visual Mark (Stylized N) */}
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white">
+                                        <path d="M4 20V4L20 20V4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+
+                                    {/* The Wordmark (Lowercase 'netic') */}
+                                    <span className="text-2xl font-medium tracking-tight text-white font-sans lowercase">
+                                        netic
+                                    </span>
+                                </div>
                                 {/* 
                 <img
                   src="/netic-logo-white-clean.png" 

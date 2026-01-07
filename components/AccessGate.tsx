@@ -141,11 +141,16 @@ export default function AccessGate({ children }: AccessGateProps) {
                     <div className="text-center mb-10">
                         {/* Netic Brand Mark */}
                         <div className="flex items-center justify-center mb-6">
-                            {/* CSS Logo Replacement per Nova */}
-                            <div className="flex flex-col items-center">
-                                <span className="font-sans text-9xl font-bold text-white tracking-tighter leading-none select-none"
-                                    style={{ textShadow: "0 0 40px rgba(255,255,255,0.2)" }}>
-                                    N
+                            {/* Netic SVG Wordmark (Large) */}
+                            <div className="flex items-center gap-4">
+                                {/* The Visual Mark (Stylized N) */}
+                                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-white">
+                                    <path d="M4 20V4L20 20V4" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+
+                                {/* The Wordmark (Lowercase 'netic') */}
+                                <span className="text-6xl font-medium tracking-tight text-white font-sans lowercase">
+                                    netic
                                 </span>
                             </div>
                         </div>
