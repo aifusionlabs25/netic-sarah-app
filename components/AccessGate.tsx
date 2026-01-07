@@ -148,7 +148,7 @@ export default function AccessGate({ children }: AccessGateProps) {
                             </span>
                         </div>
                         <h1 className="text-3xl font-light text-white tracking-wide">
-                            Sarah <span className="text-sky-400 font-normal">AI Access</span>
+                            Sarah
                         </h1>
                         <p className="text-slate-400 mt-3 text-sm font-light">
                             Enter your verified credentials to begin
