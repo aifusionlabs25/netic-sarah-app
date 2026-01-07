@@ -390,17 +390,12 @@ export default function InteractiveAvatar() {
                                         <div className="relative mb-8 gd-float">
                                             <div className="absolute inset-0 rounded-full bg-emerald-500/18 blur-2xl" />
                                             <div className="rounded-full bg-gradient-to-tr from-blue-500/10 to-emerald-500/10 p-2">
-                                                {/* Placeholder Headshot for Sarah */}
-                                                <div className="h-44 w-44 md:h-52 md:w-52 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-slate-400">
-                                                    Sarah Headshot
-                                                </div>
-                                                {/* 
-                        <img
-                          src="/sarah-headshot-circle.png"
-                          alt="Sarah Headshot"
-                          className="h-44 w-44 md:h-52 md:w-52 rounded-full object-cover opacity-95"
-                        /> 
-                        */}
+                                                {/* Sarah Headshot */}
+                                                <img
+                                                    src="/sarah-welcome.png"
+                                                    alt="Sarah"
+                                                    className="h-44 w-44 md:h-52 md:w-52 rounded-full object-cover border-2 border-white/20 shadow-2xl"
+                                                />
                                             </div>
                                         </div>
 
