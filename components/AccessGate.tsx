@@ -142,9 +142,9 @@ export default function AccessGate({ children }: AccessGateProps) {
                         {/* Netic Brand Mark */}
                         <div className="flex items-center justify-center mb-6">
                             <img
-                                src="/netic-header-logo.png"
+                                src="/netic-logo-final.png"
                                 alt="netic"
-                                className="h-10 w-auto object-contain"
+                                className="h-24 w-auto object-contain"
                             />
                         </div>
 
