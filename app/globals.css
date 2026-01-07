@@ -15,11 +15,11 @@
   --gd-text: 255 255 255;
   --gd-muted: 148 163 184;
   /* slate-400 */
-  --gd-bg0: 2 8 23;
-  /* slate-950-ish */
-  --gd-bg1: 3 11 26;
-  --gd-surface: 15 23 42;
-  /* slate-900 */
+  --gd-bg0: 11 59 40;
+  /* #0B3B28 (Netic Green) */
+  --gd-bg1: 5 31 21;
+  --gd-surface: 11 59 40;
+  /* #0B3B28 */
   --gd-border: 148 163 184;
 
   --gd-emerald: 16 185 129;
@@ -47,11 +47,7 @@ body {
 body {
   color: rgb(var(--gd-text));
   font-family: var(--font-outfit), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-  background:
-    radial-gradient(1200px 800px at 50% -15%, rgba(59, 130, 246, 0.20), transparent 60%),
-    radial-gradient(900px 600px at 0% 0%, rgba(99, 102, 241, 0.16), transparent 55%),
-    radial-gradient(1000px 700px at 100% 110%, rgba(16, 185, 129, 0.18), transparent 62%),
-    linear-gradient(180deg, rgb(var(--gd-bg0)) 0%, #02060f 100%);
+  background: linear-gradient(180deg, #0B3B28 0%, #020C08 100%);
   overflow-x: hidden;
 }
 
@@ -91,7 +87,7 @@ body::before {
 
   /* Glass surface */
   .gd-glass {
-    background: rgba(15, 23, 42, 0.55);
+    background: rgba(11, 59, 40, 0.45);
     border: 1px solid rgba(148, 163, 184, 0.18);
     border-radius: var(--gd-radius-lg);
     backdrop-filter: blur(var(--gd-blur));
