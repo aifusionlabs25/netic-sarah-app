@@ -46,17 +46,16 @@ function IconX(props: React.SVGProps<SVGSVGElement>) {
 
 function ShellBackground() {
     return (
-        <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
-            {/* Base gradient */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
-            {/* Tech glows (Netic: Maybe shift more to Blue/Purple? Keeping standard for now) */}
-            <div className="absolute left-1/2 top-[35%] -translate-x-1/2 -translate-y-1/2 h-[780px] w-[780px] rounded-full bg-blue-500/10 blur-[110px]" />
-            <div className="absolute left-[-120px] top-[-180px] h-[520px] w-[620px] rounded-full bg-indigo-500/10 blur-[110px]" />
-            <div className="absolute right-[-180px] bottom-[-220px] h-[640px] w-[840px] rounded-full bg-emerald-500/10 blur-[130px]" />
-            {/* Subtle grid (masked) */}
-            <div className="absolute inset-0 gd-grid opacity-[0.45]" />
-            {/* Vignette */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.55)_70%,rgba(0,0,0,0.8)_100%)]" />
+        <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden bg-[#0B3B28]">
+            {/* Netic Brand Pattern (SVG Wave) */}
+            <div className="absolute inset-0 opacity-10 pointer-events-none">
+                <svg className="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <path d="M0 100 C 20 0 50 0 100 100 Z" fill="#ffffff" />
+                </svg>
+            </div>
+
+            {/* Optional: Subtle Vignette for depth */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,rgba(0,0,0,0.4)_100%)]" />
         </div>
     );
 }
