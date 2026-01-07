@@ -49,7 +49,7 @@ export async function POST(request: Request) {
             <div class="field"><span class="label">Company:</span> ${company || 'N/A'}</div>
             <div class="field"><span class="label">Website:</span> ${website || 'N/A'}</div>
             <hr style="margin: 20px 0; border: 0; border-top: 1px solid #e5e7eb;">
-            <p style="font-size: 12px; color: #666;">This request was submitted via the Morgan Demo Access Gate.</p>
+            <p style="font-size: 12px; color: #666;">This request was submitted via the Sarah Netic Demo Access Gate.</p>
         </div>
     </div>
 </body>
@@ -68,15 +68,15 @@ export async function POST(request: Request) {
 
             // 2. Send User Confirmation
             await resend.emails.send({
-                from: 'GoDeskless <noreply@aifusionlabs.app>',
+                from: 'Netic <noreply@aifusionlabs.app>',
                 to: [email],
-                subject: 'We received your access request',
+                subject: 'We received your Netic access request',
                 html: `
 <p>Hi ${name},</p>
-<p>Thanks for your interest in the Morgan Interactive Demo.</p>
+<p>Thanks for your interest in the Sarah (Netic.ai) Interactive Demo.</p>
 <p>We have received your request and our team will review it shortly. If approved, you will receive an access code via email.</p>
-<p>Best,<br>The GoDeskless Team</p>
-<a href="https://godeskless.com">Visit GoDeskless</a>
+<p>Best,<br>The Netic.ai Team</p>
+<a href="https://netic.ai">Visit Netic.ai</a>
 `
             });
         } else {
