@@ -248,7 +248,7 @@ export default function InteractiveAvatar() {
                             >
                                 {/* Netic Logo */}
                                 <img
-                                    src="/netic-header-logo.jpg"
+                                    src="/netic-header-logo.png"
                                     alt="Netic.ai"
                                     className="h-8 w-auto object-contain"
                                 />
