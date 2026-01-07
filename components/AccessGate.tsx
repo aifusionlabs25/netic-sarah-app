@@ -130,26 +130,39 @@ export default function AccessGate({ children }: AccessGateProps) {
         <>
             <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center p-4">
                 <div className="w-full max-w-md">
-                    {/* Logo */}
-                    <div className="text-center mb-8">
+                    {/* Sarah's Portrait */}
+                    <div className="relative w-32 h-32 mx-auto mb-6">
+                        <div className="absolute inset-0 bg-sky-500/20 blur-xl rounded-full"></div>
                         <img
-                            src="/godeskless-logo-white-clean.png"
-                            alt="GoDeskless"
-                            className="h-12 mx-auto mb-4"
+                            src="/sarah-welcome.png"
+                            alt="Sarah"
+                            className="relative w-full h-full object-cover rounded-full border-2 border-sky-500/30 shadow-2xl"
                         />
-                        <h1 className="text-2xl font-light text-white">
-                            Morgan AI <span className="text-emerald-400">Demo Access</span>
+                    </div>
+
+                    {/* Branding */}
+                    <div className="text-center mb-8">
+                        <div className="flex items-center justify-center mb-2">
+                            <span className="px-3 py-1 bg-sky-500/10 border border-sky-500/20 rounded-full text-xs font-medium text-sky-400 tracking-wider uppercase">
+                                Powered by Netic.ai
+                            </span>
+                        </div>
+                        <h1 className="text-3xl font-light text-white tracking-wide">
+                            Sarah <span className="text-sky-400 font-normal">AI Access</span>
                         </h1>
-                        <p className="text-slate-400 mt-2 text-sm">
-                            Enter your verified credentials
+                        <p className="text-slate-400 mt-3 text-sm font-light">
+                            Enter your verified credentials to begin
                         </p>
                     </div>
 
                     {/* Login Form */}
-                    <form onSubmit={handleSubmit} className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-8 border border-slate-700/50 shadow-2xl">
-                        <div className="space-y-5">
+                    <form onSubmit={handleSubmit} className="bg-slate-900/40 backdrop-blur-md rounded-2xl p-8 border border-white/5 shadow-2xl relative overflow-hidden group">
+                        {/* Glow Effect */}
+                        <div className="absolute -top-20 -right-20 w-40 h-40 bg-sky-500/10 blur-3xl rounded-full group-hover:bg-sky-500/20 transition-all duration-700"></div>
+
+                        <div className="space-y-5 relative z-10">
                             <div>
-                                <label className="block text-sm font-medium text-slate-300 mb-2">
+                                <label className="block text-xs uppercase tracking-wider font-semibold text-slate-400 mb-2 ml-1">
                                     Your Name
                                 </label>
                                 <input
@@ -158,12 +171,12 @@ export default function AccessGate({ children }: AccessGateProps) {
                                     onChange={(e) => setName(e.target.value)}
                                     placeholder="Enter your name"
                                     required
-                                    className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                                    className="w-full px-4 py-3 bg-slate-950/80 border border-slate-700/50 rounded-lg text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500/50 transition-all"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-slate-300 mb-2">
+                                <label className="block text-xs uppercase tracking-wider font-semibold text-slate-400 mb-2 ml-1">
                                     Work Email
                                 </label>
                                 <input
@@ -172,12 +185,12 @@ export default function AccessGate({ children }: AccessGateProps) {
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="name@company.com"
                                     required
-                                    className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                                    className="w-full px-4 py-3 bg-slate-950/80 border border-slate-700/50 rounded-lg text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500/50 transition-all"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-sm font-medium text-slate-300 mb-2">
+                                <label className="block text-xs uppercase tracking-wider font-semibold text-slate-400 mb-2 ml-1">
                                     Access Code
                                 </label>
                                 <input
@@ -186,12 +199,12 @@ export default function AccessGate({ children }: AccessGateProps) {
                                     onChange={(e) => setToken(e.target.value)}
                                     placeholder="Enter access code"
                                     required
-                                    className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all"
+                                    className="w-full px-4 py-3 bg-slate-950/80 border border-slate-700/50 rounded-lg text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-sky-500/50 focus:border-sky-500/50 transition-all"
                                 />
                             </div>
 
                             {error && (
-                                <div className="text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-2">
+                                <div className="text-red-400 text-sm bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-2 text-center">
                                     {error}
                                 </div>
                             )}
@@ -199,15 +212,15 @@ export default function AccessGate({ children }: AccessGateProps) {
                             <button
                                 type="submit"
                                 disabled={loading || !name || !email || !token}
-                                className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-medium rounded-lg shadow-lg shadow-emerald-500/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="w-full py-3.5 bg-gradient-to-r from-sky-600 to-blue-700 hover:from-sky-500 hover:to-blue-600 text-white font-medium rounded-lg shadow-lg shadow-sky-500/20 hover:shadow-sky-500/40 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed uppercase tracking-wide text-sm"
                             >
-                                {loading ? 'Verifying...' : 'Secure Access'}
+                                {loading ? 'Verifying...' : 'Initialize Session'}
                             </button>
                         </div>
                     </form>
 
-                    <p className="text-center text-slate-500 text-xs mt-6">
-                        Need access? <button onClick={() => setIsRequestOpen(true)} className="text-emerald-400 hover:text-emerald-300 underline underline-offset-2 transition-colors">Click here</button>
+                    <p className="text-center text-slate-500 text-xs mt-8">
+                        Need access? <button onClick={() => setIsRequestOpen(true)} className="text-sky-400 hover:text-sky-300 transition-colors">Request Invite</button>
                     </p>
                 </div>
             </div>
