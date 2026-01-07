@@ -247,11 +247,10 @@ export default function InteractiveAvatar() {
                                 className="flex items-center gap-3 hover:opacity-85 transition-opacity"
                             >
                                 {/* Netic Logo */}
-                                <img
-                                    src="/netic-header-logo.png"
-                                    alt="Netic.ai"
-                                    className="h-8 w-auto object-contain"
-                                />
+                                {/* CSS Logo Replacement */}
+                                <span className="font-sans text-3xl font-bold text-white tracking-tighter leading-none select-none">
+                                    N
+                                </span>
                                 {/* 
                 <img
                   src="/netic-logo-white-clean.png" 

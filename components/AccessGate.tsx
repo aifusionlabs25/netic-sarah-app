@@ -141,11 +141,13 @@ export default function AccessGate({ children }: AccessGateProps) {
                     <div className="text-center mb-10">
                         {/* Netic Brand Mark */}
                         <div className="flex items-center justify-center mb-6">
-                            <img
-                                src="/netic-logo-final.png"
-                                alt="netic"
-                                className="h-24 w-auto object-contain"
-                            />
+                            {/* CSS Logo Replacement per Nova */}
+                            <div className="flex flex-col items-center">
+                                <span className="font-sans text-9xl font-bold text-white tracking-tighter leading-none select-none"
+                                    style={{ textShadow: "0 0 40px rgba(255,255,255,0.2)" }}>
+                                    N
+                                </span>
+                            </div>
                         </div>
 
                         {/* Sarah Avatar */}
