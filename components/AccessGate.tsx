@@ -142,7 +142,7 @@ export default function AccessGate({ children }: AccessGateProps) {
                         {/* Netic Brand Mark */}
                         <div className="flex items-center justify-center mb-6">
                             {/* Netic Official SVG (Scraped) wrapped in container */}
-                            <div className="relative h-20 w-auto">
+                            <div className="relative h-12 w-auto py-6">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     className="h-full w-auto fill-white"
