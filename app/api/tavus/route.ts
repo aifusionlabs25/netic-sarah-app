@@ -107,8 +107,10 @@ export async function POST(request: Request) {
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.error('[Tavus API] Request Failed:', JSON.stringify(errorData, null, 2)); // Detailed logging
-      return NextResponse.json({ error: errorData.message || 'Failed to start conversation' }, { status: response.status });
+      console.error('[Tavus API] Request Failed:', JSON.stringify(errorData, null, 2));
+      // Handle various error formats from Tavus/Upstream
+      const errorMessage = errorData.message || errorData.error || errorData.detail || JSON.stringify(errorData);
+      return NextResponse.json({ error: `Tavus Error: ${errorMessage}` }, { status: response.status });
     }
 
     const data = await response.json();

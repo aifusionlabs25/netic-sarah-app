@@ -246,8 +246,12 @@ export default function InteractiveAvatar() {
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-3 hover:opacity-85 transition-opacity"
                             >
-                                {/* Placeholder Logo Text if image missing, or use new image */}
-                                <span className="text-xl font-bold tracking-tight">Netic.ai</span>
+                                {/* Netic Logo */}
+                                <img
+                                    src="/netic-header-logo.jpg"
+                                    alt="Netic.ai"
+                                    className="h-8 w-auto object-contain"
+                                />
                                 {/* 
                 <img
                   src="/netic-logo-white-clean.png" 

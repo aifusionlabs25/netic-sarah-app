@@ -141,7 +141,11 @@ export default function AccessGate({ children }: AccessGateProps) {
                     <div className="text-center mb-10">
                         {/* Netic Brand Mark */}
                         <div className="flex items-center justify-center mb-6">
-                            <h2 className="text-3xl font-serif font-medium tracking-tight text-white">netic</h2>
+                            <img
+                                src="/netic-logo-text.png"
+                                alt="netic"
+                                className="h-8 md:h-10 w-auto opacity-90 invert brightness-0 filter"
+                            />
                         </div>
 
                         {/* Sarah Avatar */}
