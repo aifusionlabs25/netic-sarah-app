@@ -180,22 +180,29 @@ export async function POST(request: Request) {
             }
 
             // ============================================================================
-            // AI ANALYSIS: Only attempt if transcript is substantial
+            // AI ANALYSIS: Only attempt if transcript is substantial AND OpenAI is configured
             // ============================================================================
             if (transcriptText && transcriptText.length >= 50) {
                 console.log(`[Webhook] ✅ Analyzing ${transcriptText.length} chars with ${CONFIG.OPENAI.MODEL}...`);
                 console.log(`[Webhook] 📜 NORMALIZED TRANSCRIPT PREVIEW:`, transcriptText.substring(0, 500) + '...');
 
-                const aiService = new OpenAIService();
-
-                try {
-                    leadData = await aiService.analyzeTranscript(transcriptText);
-                } catch (error: any) {
-                    console.error('[Webhook] ❌ AI Analysis Failed:', error);
+                // Check for API key BEFORE instantiation to avoid crash
+                if (!process.env.OPENAI_API_KEY) {
+                    console.warn('[Webhook] ⚠️ OPENAI_API_KEY not configured. Skipping AI analysis, using fallback data.');
+                } else {
+                    try {
+                        const aiService = new OpenAIService();
+                        leadData = await aiService.analyzeTranscript(transcriptText);
+                        console.log('[Webhook] ✅ AI Analysis completed successfully.');
+                    } catch (error: any) {
+                        console.error('[Webhook] ❌ AI Analysis Failed:', error.message || error);
+                        // Continue with fallback data - don't crash
+                    }
                 }
             } else {
                 console.log(`[Webhook] ⚠️ Transcript too short for AI analysis (${transcriptText.length} chars). Using fallback data.`);
             }
+
 
             // ============================================================================
             // ALWAYS CREATE FALLBACK DATA (for analytics - track all sessions)
