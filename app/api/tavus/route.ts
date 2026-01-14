@@ -56,7 +56,7 @@ export async function POST(request: Request) {
     let finalBaseUrl = baseUrl;
 
     if (process.env.VERCEL_ENV === 'production') {
-      finalBaseUrl = 'https://sarah-netic.vercel.app'; // Proposed Production URL
+      finalBaseUrl = 'https://netic-sarah-app.vercel.app'; // Production URL
     } else if (process.env.VERCEL_URL) {
       finalBaseUrl = `https://${process.env.VERCEL_URL}`;
     }
