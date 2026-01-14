@@ -60,7 +60,13 @@ function ShellBackground() {
     );
 }
 
-export default function InteractiveAvatar() {
+// Props from AccessGate
+interface InteractiveAvatarProps {
+    userEmail?: string;
+    userName?: string;
+}
+
+export default function InteractiveAvatar({ userEmail, userName }: InteractiveAvatarProps) {
     const [conversation, setConversation] = useState<TavusConversation | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -92,7 +98,14 @@ export default function InteractiveAvatar() {
             const response = await fetch('/api/tavus', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ audio_only: audioOnly }),
+                body: JSON.stringify({
+                    audio_only: audioOnly,
+                    // Pass user identity from AccessGate for webhook fallback
+                    properties: {
+                        user_email: userEmail,
+                        user_name: userName
+                    }
+                }),
             });
 
             if (!response.ok) {
