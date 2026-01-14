@@ -5,6 +5,7 @@ import { Resend } from 'resend'; // Switched from GmailDraft to Resend for "Spoo
 import { OpenAIService } from '@/lib/openai-service';
 import { CONFIG } from '@/lib/config';
 import { SalesforceService } from '@/lib/salesforce-service';
+import { generateMeetingOptions } from '@/lib/calendar-service';
 
 // Allow webhook to run for up to 60 seconds (Vercel Limit) to wait for transcripts
 export const maxDuration = 60;
@@ -249,28 +250,102 @@ export async function POST(request: Request) {
                 // Fallback to aifusionlabs@gmail.com if lead email is missing
                 const recipient = leadData.lead_email && leadData.lead_email.includes('@') ? leadData.lead_email : 'aifusionlabs@gmail.com';
 
-                // 1. SARAH FOLLOW-UP EMAIL
+                // Generate ICS calendar options if Sarah proposed meeting times
+                let calendarSection = '';
+                const attachments: Array<{ filename: string; content: Buffer }> = [];
+
+                if (leadData.proposed_meeting_times && leadData.proposed_meeting_times.length > 0) {
+                    const meetingOptions = generateMeetingOptions(
+                        leadData.proposed_meeting_times,
+                        recipient,
+                        leadData.lead_name || 'there',
+                        leadData.company_name || 'Your Company'
+                    );
+
+                    if (meetingOptions.length > 0) {
+                        calendarSection = `
+                        <div style="background: linear-gradient(135deg, #0B3B28 0%, #134e3a 100%); border-radius: 12px; padding: 24px; margin: 24px 0;">
+                            <h3 style="color: #10B981; margin: 0 0 16px 0; font-size: 18px;">📅 Schedule Your Demo</h3>
+                            <p style="color: #d1fae5; margin: 0 0 16px 0; font-size: 14px;">I've attached calendar invites for the times we discussed. Choose whichever works best for you:</p>
+                            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                ${meetingOptions.map((opt, idx) => `
+                                    <div style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10B981; border-radius: 8px; padding: 12px 16px; color: #d1fae5; font-size: 13px;">
+                                        <strong>Option ${idx + 1}:</strong> ${opt.date.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })} at ${opt.date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <p style="color: #a7f3d0; margin: 16px 0 0 0; font-size: 12px;">📎 Calendar invites attached - just open the .ics file to add to your calendar</p>
+                        </div>
+                        `;
+
+                        // Create ICS attachments
+                        meetingOptions.forEach((opt, idx) => {
+                            attachments.push({
+                                filename: `netic-demo-option-${idx + 1}.ics`,
+                                content: Buffer.from(opt.ics, 'utf-8')
+                            });
+                        });
+                    }
+                }
+
+                // 1. SARAH FOLLOW-UP EMAIL - Netic Branded
                 const emailBodyHtml = `
-                <div style="font-family: sans-serif; padding: 20px; line-height: 1.6; color: #333;">
-                    <p style="white-space: pre-line;">${leadData.followUpEmail}</p>
-                    <br>
-                    <hr style="border: 0; border-top: 1px solid #eee;">
-                    <p style="color: #666; font-size: 0.9em;">
-                        <strong>Sarah</strong><br>
-                        Senior Revenue Specialist<br>
-                        <span style="color: #10B981;">Netic</span><br>
-                        <a href="https://www.netic.ai">www.netic.ai</a>
-                    </p>
-                </div>
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="utf-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                </head>
+                <body style="margin: 0; padding: 0; background-color: #f8faf9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+                    <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff;">
+                        
+                        <!-- Header -->
+                        <div style="background: linear-gradient(135deg, #0B3B28 0%, #134e3a 100%); padding: 32px 24px; text-align: center;">
+                            <img src="https://uploads-ssl.webflow.com/672bd420dfed92b3af3ed50c/672bd420dfed92b3af3ed5e6_Netic%20Logo%20White.svg" alt="Netic" style="height: 32px; margin-bottom: 16px;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: 600;">Thanks for chatting with me!</h1>
+                            <p style="color: #a7f3d0; margin: 8px 0 0 0; font-size: 14px;">Here's everything we discussed</p>
+                        </div>
+
+                        <!-- Main Content -->
+                        <div style="padding: 32px 24px;">
+                            <div style="color: #374151; font-size: 15px; line-height: 1.7;">
+                                ${leadData.followUpEmail}
+                            </div>
+
+                            ${calendarSection}
+                        </div>
+
+                        <!-- Footer -->
+                        <div style="background-color: #f8faf9; padding: 24px; border-top: 1px solid #e5e7eb;">
+                            <table style="width: 100%;">
+                                <tr>
+                                    <td style="vertical-align: top;">
+                                        <p style="margin: 0 0 4px 0; font-weight: 600; color: #0B3B28;">Sarah</p>
+                                        <p style="margin: 0; color: #6b7280; font-size: 13px;">Senior Revenue Specialist</p>
+                                        <p style="margin: 4px 0 0 0;">
+                                            <a href="https://www.netic.ai" style="color: #10B981; text-decoration: none; font-size: 13px;">netic.ai</a>
+                                        </p>
+                                    </td>
+                                    <td style="vertical-align: top; text-align: right;">
+                                        <img src="https://uploads-ssl.webflow.com/672bd420dfed92b3af3ed50c/672bd420dfed92b3af3ed5e7_Netic%20Icon.svg" alt="" style="height: 40px; opacity: 0.5;">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </body>
+                </html>
                 `;
 
                 await resend.emails.send({
                     from: 'Sarah at Netic <noreply@aifusionlabs.app>',
                     to: [recipient, 'aifusionlabs@gmail.com'],
-                    subject: `Action Plan: Next Steps for ${leadData.company_name || 'Your Team'}`,
-                    html: emailBodyHtml
+                    subject: `${leadData.lead_name || 'Hi'} - Your Netic Demo Follow-up`,
+                    html: emailBodyHtml,
+                    attachments: attachments.length > 0 ? attachments : undefined
                 });
-                console.log('✅ [Webhook] Sent "Sarah" email to:', recipient);
+                console.log('✅ [Webhook] Sent branded email to:', recipient, `with ${attachments.length} calendar attachments`);
+
 
                 // 2. INTERNAL LEAD ALERT (Intelligence Email)
                 console.log('[Webhook] Sending Internal Lead Alert...');

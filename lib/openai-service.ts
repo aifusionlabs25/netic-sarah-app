@@ -20,6 +20,8 @@ export interface LeadData {
     followUpEmail: string;
     morgan_action: string;
     team_action: string;
+    proposed_meeting_times?: string[]; // Meeting times Sarah proposed during conversation
+    wants_demo?: boolean; // Did the prospect request a demo?
 }
 
 export class OpenAIService {
@@ -58,8 +60,10 @@ export class OpenAIService {
           - CRITICAL: If you mention that you are sending a summary (e.g. "I've sent a summary..."), you MUST actually include that summary as a bulleted list <ul><li>...</li></ul> in the email body.
           - Propose the next step (Demo or Call).
           - Key Tone: Helpful, not pushy.
-        - **morgan_action**: Briefly describe what Morgan (the AI) did or promised in the call (e.g. "Explained dispatch features, promised summary email").
+        - **morgan_action**: Briefly describe what Sarah (the AI) did or promised in the call (e.g. "Explained dispatch features, promised summary email").
         - **team_action**: Briefly describe what the Human Sales Team needs to do next (e.g. "Call to schedule deep-dive demo", "Verify budget").
+        - **proposed_meeting_times**: Array of any specific meeting times Sarah proposed (e.g. ["Tuesday at 2pm", "Wednesday at 10am", "Thursday at 3pm"]). If none proposed, return empty array [].
+        - **wants_demo**: Boolean - did the prospect express interest in a demo or wanting to schedule a call? true/false.
         
         EXAMPLE OUTPUT FORMAT:
         {
@@ -79,7 +83,9 @@ export class OpenAIService {
             "salesPlan": ["Demo dispatch feature", "Highlight mobile app"],
             "morgan_action": "Explained mobile capabilities and promised to send usage summary",
             "team_action": "Schedule follow-up demo to show dispatch dashboard",
-            "followUpEmail": "<p>Hi Tom,</p><p>Great connecting just now. You mentioned that scheduling chaos is costing you jobs—that's exactly what we fix.</p><p>As discussed, here is how we help:</p><ul><li>Automated Dispatching</li><li>Real-time tech tracking</li></ul><p>Let's get that demo set up.</p>"
+            "followUpEmail": "<p>Hi Tom,</p><p>Great connecting just now. You mentioned that scheduling chaos is costing you jobs—that's exactly what we fix.</p><p>As discussed, here is how we help:</p><ul><li>Automated Dispatching</li><li>Real-time tech tracking</li></ul><p>Let's get that demo set up.</p>",
+            "proposed_meeting_times": ["Tuesday at 2pm PT", "Wednesday at 10am PT"],
+            "wants_demo": true
         }
         `;
 
