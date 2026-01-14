@@ -180,149 +180,161 @@ export async function POST(request: Request) {
             }
 
             // ============================================================================
-            // NOVA FIX #3: LOWERED GATE TO 50 CHARS (Better for testing)
+            // AI ANALYSIS: Only attempt if transcript is substantial
             // ============================================================================
             if (transcriptText && transcriptText.length >= 50) {
                 console.log(`[Webhook] ✅ Analyzing ${transcriptText.length} chars with ${CONFIG.OPENAI.MODEL}...`);
                 console.log(`[Webhook] 📜 NORMALIZED TRANSCRIPT PREVIEW:`, transcriptText.substring(0, 500) + '...');
 
                 const aiService = new OpenAIService();
-                // leadData already declared in outer scope
 
                 try {
                     leadData = await aiService.analyzeTranscript(transcriptText);
                 } catch (error: any) {
                     console.error('[Webhook] ❌ AI Analysis Failed:', error);
-                    // Safe Mode fallback is handled inside OpenAIService
-                }
-
-                // ============================================================================
-                // NOVA FIX #6: TRUST VERIFIED IDENTITY (Override AI Hallucinations)
-                // ============================================================================
-                if (body.properties && body.properties.user_email) {
-                    if (!leadData) leadData = {}; // Initialize if AI failed completely
-                    leadData.lead_email = body.properties.user_email;
-                    if (body.properties.user_name) leadData.lead_name = body.properties.user_name;
-                    console.log('[Webhook] 📧 Enforcing Verified User Identity:', leadData.lead_email);
-                }
-
-                if (leadData) {
-                    console.log('[Webhook] Sending "Spoofed" Follow-up Email via Resend...');
-
-                    if (process.env.RESEND_API_KEY) {
-                        const resend = new Resend(process.env.RESEND_API_KEY);
-
-                        // User requested spoofing: "Morgan drafts that follow up email... impress the CEO"
-                        // Fallback to aifusionlabs@gmail.com if lead email is missing or for demo safety
-                        const recipient = leadData.lead_email && leadData.lead_email.includes('@') ? leadData.lead_email : 'aifusionlabs@gmail.com';
-
-                        // Create a nicer HTML wrapper for the AI-generated text
-                        const emailBodyHtml = `
-                        <div style="font-family: sans-serif; padding: 20px; line-height: 1.6; color: #333;">
-                            <p style="white-space: pre-line;">${leadData.followUpEmail}</p>
-                            <br>
-                            <hr style="border: 0; border-top: 1px solid #eee;">
-                            <p style="color: #666; font-size: 0.9em;">
-                                <strong>Sarah</strong><br>
-                                Senior Revenue Specialist<br>
-                                <span style="color: #10B981;">Netic</span><br>
-                                <a href="https://www.netic.ai">www.netic.ai</a>
-                            </p>
-                        </div>
-                        `;
-
-
-                        await resend.emails.send({
-                            from: 'Sarah at Netic <noreply@aifusionlabs.app>',
-                            to: [recipient, 'aifusionlabs@gmail.com'], // Always BCC the user for the demo
-                            subject: `Action Plan: Next Steps for ${leadData.company_name || 'Your Team'}`,
-                            html: emailBodyHtml
-                        });
-                        console.log('✅ [Webhook] Sent "Sarah" email to:', recipient);
-
-                        // ============================================================================
-                        // NOVA FEATURE: INTERNAL LEAD ALERT (The "3rd Email")
-                        // Separate email to the internal team with rich data for scoring/review
-                        // ============================================================================
-                        // ============================================================================
-                        // NOVA FEATURE: INTERNAL LEAD ALERT (The "3rd Email")
-                        // Separate email to the internal team with rich data for scoring/review
-                        // ============================================================================
-                        console.log('[Webhook] Sending Internal Lead Alert...');
-
-                        const internalBodyHtml = `
-                            < div style = "font-family: sans-serif; padding: 20px; line-height: 1.5; color: #333; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px;" >
-                            <div style= "border-bottom: 2px solid #10B981; padding-bottom: 10px; margin-bottom: 15px;" >
-                                <h2 style="color: #10B981; margin: 0;" >🚨 Hot Lead Detected </h2>
-                                    < p style = "margin: 5px 0 0 0; color: #666; font-size: 14px;" > Conversation ID: ${conversation_id} </p>
-                                        </div>
-
-                                        < div style = "display: grid; grid-template-columns: 1fr 1fr; gap: 20px;" >
-                                            <div>
-                                            <h3 style="margin-bottom: 10px; color: #111;" >👤 Prospect </h3>
-                                                < p style = "margin: 5px 0;" > <strong>Name: </strong> ${leadData.lead_name}</p >
-                                                    <p style="margin: 5px 0;" > <strong>Role: </strong> ${leadData.role}</p >
-                                                        <p style="margin: 5px 0;" > <strong>Company: </strong> ${leadData.company_name}</p >
-                                                            <p style="margin: 5px 0;" > <strong>Email: </strong> ${leadData.lead_email}</p >
-                                                                <p style="margin: 5px 0;" > <strong>Location: </strong> ${leadData.geography}</p >
-                                                                    </div>
-                                                                    < div >
-                                                                    <h3 style="margin-bottom: 10px; color: #111;" >🏢 Organization </h3>
-                                                                        < p style = "margin: 5px 0;" > <strong>Vertical: </strong> ${leadData.vertical}</p >
-                                                                            <p style="margin: 5px 0;" > <strong>Team Size: </strong> ${leadData.teamSize}</p >
-                                                                                <p style="margin: 5px 0;" > <strong>Budget: </strong> ${leadData.budget_range}</p >
-                                                                                    <p style="margin: 5px 0;" > <strong>Systems: </strong> ${leadData.currentSystems}</p >
-                                                                                        </div>
-                                                                                        </div>
-
-                                                                                        < hr style = "border: 0; border-top: 1px solid #ccc; margin: 20px 0;" >
-
-                                                                                            <h3 style="color: #111;" >⚠️ Pain Points </h3>
-                                                                                                < ul style = "background: #fff; padding: 15px 20px; border-radius: 4px; border: 1px solid #e5e5e5;" >
-                                                                                                    ${(leadData.pain_points || []).map((p: string) => `<li>${p}</li>`).join('')}
-                        </ul>
-
-                            < h3 style = "color: #111;" >🤖 AI Analysis & Next Steps </h3>
-                                < div style = "background: #eef2ff; padding: 15px; border-radius: 4px; margin-bottom: 10px; border-left: 4px solid #6366f1;" >
-                                    <strong>Sarah's Action:</strong><br>
-                                ${leadData.morgan_action || 'Standard follow-up sent.'}
-                        </div>
-                            < div style = "background: #fdf2f8; padding: 15px; border-radius: 4px; margin-bottom: 20px; border-left: 4px solid #ec4899;" >
-                                <strong>Recommended Team Action: </strong><br>
-                                ${leadData.team_action || 'Call to verify lead details.'}
-                        </div>
-
-                            < div style = "text-align: center; margin-top: 30px;" >
-                                ${tavusRecordingUrl
-                                ? `<a href="${tavusRecordingUrl}" style="background-color: #333; color: #fff; padding: 12px 25px; text-decoration: none; border-radius: 6px; font-weight: bold;">View Conversation Record</a>
-                                       <p style="margin-top: 10px; font-size: 12px; color: #999;">Link expires in 7 days</p>`
-                                : `<div style="background-color: #eee; color: #666; padding: 12px 25px; border-radius: 6px; display: inline-block;">Video Processing...</div>
-                                       <p style="margin-top: 10px; font-size: 12px; color: #999;">Recording will be available in your Dashboard shortly.</p>`
-                            }
-                        </div>
-                            </div>
-                                `;
-
-                        await resend.emails.send({
-                            from: 'Netic Intelligence <alerts@aifusionlabs.app>',
-                            to: 'aifusionlabs@gmail.com',
-                            subject: `[LEAD ALERT] ${leadData.company_name} - ${leadData.lead_name} `,
-                            html: internalBodyHtml
-                        });
-                        console.log('✅ [Webhook] Sent "Internal Alert" email to Team.');
-
-                    } else {
-                        console.error('❌ [Webhook] RESEND_API_KEY missing. Cannot send email.');
-                    }
-
-
-
-
-                    console.log('[Webhook] 🚀 Hot Lead Pipeline Complete!');
                 }
             } else {
-                console.warn(`[Webhook] Transcript too short(${transcriptText.length} chars).Skipping AI, but logging to Sheets.`);
+                console.log(`[Webhook] ⚠️ Transcript too short for AI analysis (${transcriptText.length} chars). Using fallback data.`);
             }
+
+            // ============================================================================
+            // ALWAYS CREATE FALLBACK DATA (for analytics - track all sessions)
+            // ============================================================================
+            if (!leadData) {
+                leadData = {
+                    lead_name: 'Short Session User',
+                    role: 'Unknown',
+                    company_name: 'Unknown',
+                    lead_email: '',
+                    lead_phone: '',
+                    budget_range: 'Unknown',
+                    timeline: 'Unknown',
+                    pain_points: [],
+                    buying_committee: [],
+                    vertical: 'Unknown',
+                    teamSize: 'Unknown',
+                    geography: 'Unknown',
+                    currentSystems: 'Unknown',
+                    salesPlan: `Session ended with ${transcriptText.length} chars of transcript. May have been a test or abandoned session.`,
+                    morgan_action: 'Session ended before meaningful conversation',
+                    team_action: 'No action needed - short session',
+                    followUpEmail: '<p>Thanks for stopping by! If you have any questions about Netic, feel free to reach out.</p><p>Best,<br>Sarah</p>'
+                };
+            }
+
+            // ============================================================================
+            // TRUST VERIFIED IDENTITY (Override defaults with AccessGate data)
+            // ============================================================================
+            if (body.properties && body.properties.user_email) {
+                leadData.lead_email = body.properties.user_email;
+                if (body.properties.user_name) leadData.lead_name = body.properties.user_name;
+                console.log('[Webhook] 📧 Enforcing Verified User Identity:', leadData.lead_email);
+            }
+
+            // ============================================================================
+            // ALWAYS SEND BOTH EMAILS (for analytics tracking)
+            // ============================================================================
+            console.log('[Webhook] Sending emails (always-send mode for analytics)...');
+
+            if (process.env.RESEND_API_KEY) {
+                const resend = new Resend(process.env.RESEND_API_KEY);
+
+                // Fallback to aifusionlabs@gmail.com if lead email is missing
+                const recipient = leadData.lead_email && leadData.lead_email.includes('@') ? leadData.lead_email : 'aifusionlabs@gmail.com';
+
+                // 1. SARAH FOLLOW-UP EMAIL
+                const emailBodyHtml = `
+                <div style="font-family: sans-serif; padding: 20px; line-height: 1.6; color: #333;">
+                    <p style="white-space: pre-line;">${leadData.followUpEmail}</p>
+                    <br>
+                    <hr style="border: 0; border-top: 1px solid #eee;">
+                    <p style="color: #666; font-size: 0.9em;">
+                        <strong>Sarah</strong><br>
+                        Senior Revenue Specialist<br>
+                        <span style="color: #10B981;">Netic</span><br>
+                        <a href="https://www.netic.ai">www.netic.ai</a>
+                    </p>
+                </div>
+                `;
+
+                await resend.emails.send({
+                    from: 'Sarah at Netic <noreply@aifusionlabs.app>',
+                    to: [recipient, 'aifusionlabs@gmail.com'],
+                    subject: `Action Plan: Next Steps for ${leadData.company_name || 'Your Team'}`,
+                    html: emailBodyHtml
+                });
+                console.log('✅ [Webhook] Sent "Sarah" email to:', recipient);
+
+                // 2. INTERNAL LEAD ALERT (Intelligence Email)
+                console.log('[Webhook] Sending Internal Lead Alert...');
+
+                const internalBodyHtml = `
+                <div style="font-family: sans-serif; padding: 20px; line-height: 1.5; color: #333; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px;">
+                    <div style="border-bottom: 2px solid #10B981; padding-bottom: 10px; margin-bottom: 15px;">
+                        <h2 style="color: #10B981; margin: 0;">🚨 Session Alert</h2>
+                        <p style="margin: 5px 0 0 0; color: #666; font-size: 14px;">Conversation ID: ${conversation_id}</p>
+                        <p style="margin: 5px 0 0 0; color: #666; font-size: 12px;">Transcript Length: ${transcriptText.length} chars</p>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div>
+                            <h3 style="margin-bottom: 10px; color: #111;">👤 Prospect</h3>
+                            <p style="margin: 5px 0;"><strong>Name:</strong> ${leadData.lead_name}</p>
+                            <p style="margin: 5px 0;"><strong>Role:</strong> ${leadData.role}</p>
+                            <p style="margin: 5px 0;"><strong>Company:</strong> ${leadData.company_name}</p>
+                            <p style="margin: 5px 0;"><strong>Email:</strong> ${leadData.lead_email || 'Not provided'}</p>
+                            <p style="margin: 5px 0;"><strong>Location:</strong> ${leadData.geography}</p>
+                        </div>
+                        <div>
+                            <h3 style="margin-bottom: 10px; color: #111;">🏢 Organization</h3>
+                            <p style="margin: 5px 0;"><strong>Vertical:</strong> ${leadData.vertical}</p>
+                            <p style="margin: 5px 0;"><strong>Team Size:</strong> ${leadData.teamSize}</p>
+                            <p style="margin: 5px 0;"><strong>Budget:</strong> ${leadData.budget_range}</p>
+                            <p style="margin: 5px 0;"><strong>Systems:</strong> ${leadData.currentSystems}</p>
+                        </div>
+                    </div>
+
+                    <hr style="border: 0; border-top: 1px solid #ccc; margin: 20px 0;">
+
+                    <h3 style="color: #111;">⚠️ Pain Points</h3>
+                    <ul style="background: #fff; padding: 15px 20px; border-radius: 4px; border: 1px solid #e5e5e5;">
+                        ${(leadData.pain_points || []).length > 0 ? (leadData.pain_points || []).map((p: string) => `<li>${p}</li>`).join('') : '<li>No pain points captured (short session)</li>'}
+                    </ul>
+
+                    <h3 style="color: #111;">🤖 AI Analysis & Next Steps</h3>
+                    <div style="background: #eef2ff; padding: 15px; border-radius: 4px; margin-bottom: 10px; border-left: 4px solid #6366f1;">
+                        <strong>Sarah's Action:</strong><br>
+                        ${leadData.morgan_action || 'Standard follow-up sent.'}
+                    </div>
+                    <div style="background: #fdf2f8; padding: 15px; border-radius: 4px; margin-bottom: 20px; border-left: 4px solid #ec4899;">
+                        <strong>Recommended Team Action:</strong><br>
+                        ${leadData.team_action || 'Call to verify lead details.'}
+                    </div>
+
+                    <div style="text-align: center; margin-top: 30px;">
+                        ${tavusRecordingUrl
+                        ? `<a href="${tavusRecordingUrl}" style="background-color: #333; color: #fff; padding: 12px 25px; text-decoration: none; border-radius: 6px; font-weight: bold;">View Conversation Record</a>
+                               <p style="margin-top: 10px; font-size: 12px; color: #999;">Link expires in 7 days</p>`
+                        : `<div style="background-color: #eee; color: #666; padding: 12px 25px; border-radius: 6px; display: inline-block;">Video Processing...</div>
+                               <p style="margin-top: 10px; font-size: 12px; color: #999;">Recording will be available in your Dashboard shortly.</p>`
+                    }
+                    </div>
+                </div>
+                `;
+
+                await resend.emails.send({
+                    from: 'Netic Intelligence <alerts@aifusionlabs.app>',
+                    to: 'aifusionlabs@gmail.com',
+                    subject: `[SESSION ALERT] ${leadData.company_name} - ${leadData.lead_name}`,
+                    html: internalBodyHtml
+                });
+                console.log('✅ [Webhook] Sent "Internal Alert" email to Team.');
+
+            } else {
+                console.error('❌ [Webhook] RESEND_API_KEY missing. Cannot send email.');
+            }
+
+            console.log('[Webhook] 🚀 Email Pipeline Complete!');
 
 
             // ============================================================================
