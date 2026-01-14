@@ -131,19 +131,8 @@ export default function InteractiveAvatar() {
         setShowDemo(false);
     }, []);
 
-    const handleStartDemo = async () => {
-        if (!conversation) return;
-
-        setShowDemo(true);
-        try {
-            await fetch('/api/demo', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ conversation_id: conversation.conversation_id, action: 'start' }),
-            });
-        } catch (err) {
-            console.error('Failed to inject demo context:', err);
-        }
+    const handleStartDemo = () => {
+        window.open('https://www.netic.ai/book-a-demo', '_blank');
     };
 
     const handleEndDemo = async () => {
@@ -294,7 +283,7 @@ export default function InteractiveAvatar() {
                             {conversation && !showDemo && (
                                 <>
                                     <button onClick={handleStartDemo} className="gd-btn gd-btn-primary" type="button">
-                                        <span>Interactive Demo</span>
+                                        <span>Book a Demo</span>
                                         <IconArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                                     </button>
 
