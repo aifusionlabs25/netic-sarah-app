@@ -254,13 +254,6 @@ export async function POST(request: Request) {
                 <div style="font-family: sans-serif; padding: 20px; line-height: 1.6; color: #333;">
                     <p style="white-space: pre-line;">${leadData.followUpEmail}</p>
                     <br>
-                    <div style="text-align: center; margin: 20px 0;">
-                        <a href="https://calendly.com/aifusionlabs" 
-                           style="display: inline-block; background-color: #10B981; color: white; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 16px;">
-                            📅 Schedule a Demo
-                        </a>
-                        <p style="color: #888; font-size: 12px; margin-top: 8px;">Click above to book a time that works for you</p>
-                    </div>
                     <hr style="border: 0; border-top: 1px solid #eee;">
                     <p style="color: #666; font-size: 0.9em;">
                         <strong>Sarah</strong><br>
