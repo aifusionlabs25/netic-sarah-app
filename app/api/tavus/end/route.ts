@@ -76,12 +76,12 @@ export async function POST(request: Request) {
             <body>
                 <div class="container">
                     <div class="header">
-                        <h2 style="margin: 0; font-weight: 300;">Morgan AI <span style="font-weight: 600; color: #34d399;">Session Report</span></h2>
+                        <h2 style="margin: 0; font-weight: 300;">Sarah <span style="font-weight: 600; color: #34d399;">Session Report</span></h2>
                         <div style="font-size: 12px; opacity: 0.7; margin-top: 5px;">${conversation_id}</div>
                     </div>
                     <div class="content">
                         <h3 style="margin-top: 0;">Session Completed 🏁</h3>
-                        <p>A demo session with Morgan has successfully concluded.</p>
+                        <p>A demo session with Sarah has successfully concluded.</p>
                         
                         <div style="margin: 20px 0;">
                             <div class="metric">
@@ -113,7 +113,7 @@ export async function POST(request: Request) {
 
                     </div>
                     <div class="footer">
-                        Sent via GoDeskless Platform • AI Fusion Labs
+                        Sent via Netic Platform • AI Fusion Labs
                     </div>
                 </div>
             </body>
@@ -121,7 +121,7 @@ export async function POST(request: Request) {
              `;
 
             await resend.emails.send({
-                from: 'Morgan AI <noreply@aifusionlabs.app>',
+                from: 'Sarah AI <noreply@aifusionlabs.app>',
                 to: ['aifusionlabs@gmail.com'],
                 subject: `Session Report: ${conversation_id} [${hasNotes ? 'HAS NOTES' : 'No Notes'}]`,
                 html: emailHtml

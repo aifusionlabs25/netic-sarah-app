@@ -145,7 +145,7 @@ export class GeminiService {
                 lead_email: "aifusionlabs@gmail.com", // Fallback will route here
                 lead_phone: "",
                 salesPlan: "Schedule follow-up",
-                followUpEmail: "<p>Hi there,</p><p>Thanks for chatting with me. I know we covered a lot regarding your field operations.</p><p>I'd love to continue the conversation and show you how we can solve those efficiency challenges.</p><p>Best,<br>Morgan</p>"
+                followUpEmail: "<p>Hi there,</p><p>Thanks for chatting with me. I know we covered a lot regarding your field operations.</p><p>I'd love to continue the conversation and show you how we can solve those efficiency challenges.</p><p>Best,<br>Sarah</p>"
             };
         }
     }

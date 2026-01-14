@@ -1,6 +1,6 @@
 /**
  * Salesforce Service - Client Credentials OAuth Flow
- * Creates Leads in Salesforce from Morgan conversation data
+ * Creates Leads in Salesforce from Sarah conversation data
  * 
  * Required Environment Variables:
  * - SF_CLIENT_ID: Salesforce Consumer Key
@@ -89,7 +89,7 @@ export class SalesforceService {
     }
 
     /**
-     * Create a Lead in Salesforce from Morgan conversation data
+     * Create a Lead in Salesforce from Sarah conversation data
      * Returns the new Lead ID
      */
     async createLead(leadData: LeadData): Promise<string> {
@@ -117,7 +117,7 @@ export class SalesforceService {
             Industry: this.cleanValue(leadData.vertical) || 'Field Service',
             NumberOfEmployees: this.parseTeamSize(leadData.teamSize),
             City: this.cleanValue(leadData.geography),
-            LeadSource: 'Morgan AI Agent',
+            LeadSource: 'Sarah AI Agent',
             Description: this.buildDescription(leadData),
         };
 
@@ -211,6 +211,6 @@ export class SalesforceService {
             }
         }
 
-        return parts.join('\n') || 'Lead captured from Morgan AI conversation.';
+        return parts.join('\n') || 'Lead captured from Sarah AI conversation.';
     }
 }

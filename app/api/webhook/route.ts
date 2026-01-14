@@ -223,21 +223,22 @@ export async function POST(request: Request) {
                             <br>
                             <hr style="border: 0; border-top: 1px solid #eee;">
                             <p style="color: #666; font-size: 0.9em;">
-                                <strong>Morgan</strong><br>
-                                Senior Field Service Transformation Specialist<br>
-                                <span style="color: #FF4F00;">GoDeskless</span><br>
-                                <a href="https://www.godeskless.com">www.godeskless.com</a>
+                                <strong>Sarah</strong><br>
+                                Senior Revenue Specialist<br>
+                                <span style="color: #10B981;">Netic</span><br>
+                                <a href="https://www.netic.ai">www.netic.ai</a>
                             </p>
                         </div>
                         `;
 
+
                         await resend.emails.send({
-                            from: 'Morgan at GoDeskless <noreply@aifusionlabs.app>',
+                            from: 'Sarah at Netic <noreply@aifusionlabs.app>',
                             to: [recipient, 'aifusionlabs@gmail.com'], // Always BCC the user for the demo
                             subject: `Action Plan: Next Steps for ${leadData.company_name || 'Your Team'}`,
                             html: emailBodyHtml
                         });
-                        console.log('✅ [Webhook] Sent "Morgan" email to:', recipient);
+                        console.log('✅ [Webhook] Sent "Sarah" email to:', recipient);
 
                         // ============================================================================
                         // NOVA FEATURE: INTERNAL LEAD ALERT (The "3rd Email")
@@ -250,62 +251,62 @@ export async function POST(request: Request) {
                         console.log('[Webhook] Sending Internal Lead Alert...');
 
                         const internalBodyHtml = `
-                        <div style="font-family: sans-serif; padding: 20px; line-height: 1.5; color: #333; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px;">
-                            <div style="border-bottom: 2px solid #FF4F00; padding-bottom: 10px; margin-bottom: 15px;">
-                                <h2 style="color: #FF4F00; margin: 0;">🚨 Hot Lead Detected</h2>
-                                <p style="margin: 5px 0 0 0; color: #666; font-size: 14px;">Conversation ID: ${conversation_id}</p>
-                            </div>
+                            < div style = "font-family: sans-serif; padding: 20px; line-height: 1.5; color: #333; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px;" >
+                            <div style= "border-bottom: 2px solid #10B981; padding-bottom: 10px; margin-bottom: 15px;" >
+                                <h2 style="color: #10B981; margin: 0;" >🚨 Hot Lead Detected </h2>
+                                    < p style = "margin: 5px 0 0 0; color: #666; font-size: 14px;" > Conversation ID: ${conversation_id} </p>
+                                        </div>
 
-                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                                <div>
-                                    <h3 style="margin-bottom: 10px; color: #111;">👤 Prospect</h3>
-                                    <p style="margin: 5px 0;"><strong>Name:</strong> ${leadData.lead_name}</p>
-                                    <p style="margin: 5px 0;"><strong>Role:</strong> ${leadData.role}</p>
-                                    <p style="margin: 5px 0;"><strong>Company:</strong> ${leadData.company_name}</p>
-                                    <p style="margin: 5px 0;"><strong>Email:</strong> ${leadData.lead_email}</p>
-                                    <p style="margin: 5px 0;"><strong>Location:</strong> ${leadData.geography}</p>
-                                </div>
-                                <div>
-                                    <h3 style="margin-bottom: 10px; color: #111;">🏢 Organization</h3>
-                                    <p style="margin: 5px 0;"><strong>Vertical:</strong> ${leadData.vertical}</p>
-                                    <p style="margin: 5px 0;"><strong>Team Size:</strong> ${leadData.teamSize}</p>
-                                    <p style="margin: 5px 0;"><strong>Budget:</strong> ${leadData.budget_range}</p>
-                                    <p style="margin: 5px 0;"><strong>Systems:</strong> ${leadData.currentSystems}</p>
-                                </div>
-                            </div>
+                                        < div style = "display: grid; grid-template-columns: 1fr 1fr; gap: 20px;" >
+                                            <div>
+                                            <h3 style="margin-bottom: 10px; color: #111;" >👤 Prospect </h3>
+                                                < p style = "margin: 5px 0;" > <strong>Name: </strong> ${leadData.lead_name}</p >
+                                                    <p style="margin: 5px 0;" > <strong>Role: </strong> ${leadData.role}</p >
+                                                        <p style="margin: 5px 0;" > <strong>Company: </strong> ${leadData.company_name}</p >
+                                                            <p style="margin: 5px 0;" > <strong>Email: </strong> ${leadData.lead_email}</p >
+                                                                <p style="margin: 5px 0;" > <strong>Location: </strong> ${leadData.geography}</p >
+                                                                    </div>
+                                                                    < div >
+                                                                    <h3 style="margin-bottom: 10px; color: #111;" >🏢 Organization </h3>
+                                                                        < p style = "margin: 5px 0;" > <strong>Vertical: </strong> ${leadData.vertical}</p >
+                                                                            <p style="margin: 5px 0;" > <strong>Team Size: </strong> ${leadData.teamSize}</p >
+                                                                                <p style="margin: 5px 0;" > <strong>Budget: </strong> ${leadData.budget_range}</p >
+                                                                                    <p style="margin: 5px 0;" > <strong>Systems: </strong> ${leadData.currentSystems}</p >
+                                                                                        </div>
+                                                                                        </div>
 
-                            <hr style="border: 0; border-top: 1px solid #ccc; margin: 20px 0;">
+                                                                                        < hr style = "border: 0; border-top: 1px solid #ccc; margin: 20px 0;" >
 
-                            <h3 style="color: #111;">⚠️ Pain Points</h3>
-                            <ul style="background: #fff; padding: 15px 20px; border-radius: 4px; border: 1px solid #e5e5e5;">
-                                ${(leadData.pain_points || []).map((p: string) => `<li>${p}</li>`).join('')}
-                            </ul>
+                                                                                            <h3 style="color: #111;" >⚠️ Pain Points </h3>
+                                                                                                < ul style = "background: #fff; padding: 15px 20px; border-radius: 4px; border: 1px solid #e5e5e5;" >
+                                                                                                    ${(leadData.pain_points || []).map((p: string) => `<li>${p}</li>`).join('')}
+                        </ul>
 
-                            <h3 style="color: #111;">🤖 AI Analysis & Next Steps</h3>
-                            <div style="background: #eef2ff; padding: 15px; border-radius: 4px; margin-bottom: 10px; border-left: 4px solid #6366f1;">
-                                <strong>Morgan's Action:</strong><br>
+                            < h3 style = "color: #111;" >🤖 AI Analysis & Next Steps </h3>
+                                < div style = "background: #eef2ff; padding: 15px; border-radius: 4px; margin-bottom: 10px; border-left: 4px solid #6366f1;" >
+                                    <strong>Sarah's Action:</strong><br>
                                 ${leadData.morgan_action || 'Standard follow-up sent.'}
-                            </div>
-                            <div style="background: #fdf2f8; padding: 15px; border-radius: 4px; margin-bottom: 20px; border-left: 4px solid #ec4899;">
-                                <strong>Recommended Team Action:</strong><br>
+                        </div>
+                            < div style = "background: #fdf2f8; padding: 15px; border-radius: 4px; margin-bottom: 20px; border-left: 4px solid #ec4899;" >
+                                <strong>Recommended Team Action: </strong><br>
                                 ${leadData.team_action || 'Call to verify lead details.'}
-                            </div>
+                        </div>
 
-                            <div style="text-align: center; margin-top: 30px;">
+                            < div style = "text-align: center; margin-top: 30px;" >
                                 ${tavusRecordingUrl
                                 ? `<a href="${tavusRecordingUrl}" style="background-color: #333; color: #fff; padding: 12px 25px; text-decoration: none; border-radius: 6px; font-weight: bold;">View Conversation Record</a>
                                        <p style="margin-top: 10px; font-size: 12px; color: #999;">Link expires in 7 days</p>`
                                 : `<div style="background-color: #eee; color: #666; padding: 12px 25px; border-radius: 6px; display: inline-block;">Video Processing...</div>
                                        <p style="margin-top: 10px; font-size: 12px; color: #999;">Recording will be available in your Dashboard shortly.</p>`
                             }
-                            </div>
                         </div>
-                        `;
+                            </div>
+                                `;
 
                         await resend.emails.send({
-                            from: 'GoDeskless Intelligence <alerts@aifusionlabs.app>',
+                            from: 'Netic Intelligence <alerts@aifusionlabs.app>',
                             to: 'aifusionlabs@gmail.com',
-                            subject: `[LEAD ALERT] ${leadData.company_name} - ${leadData.lead_name}`,
+                            subject: `[LEAD ALERT] ${leadData.company_name} - ${leadData.lead_name} `,
                             html: internalBodyHtml
                         });
                         console.log('✅ [Webhook] Sent "Internal Alert" email to Team.');
@@ -320,7 +321,7 @@ export async function POST(request: Request) {
                     console.log('[Webhook] 🚀 Hot Lead Pipeline Complete!');
                 }
             } else {
-                console.warn(`[Webhook] Transcript too short (${transcriptText.length} chars). Skipping AI, but logging to Sheets.`);
+                console.warn(`[Webhook] Transcript too short(${transcriptText.length} chars).Skipping AI, but logging to Sheets.`);
             }
 
 
@@ -414,7 +415,7 @@ export async function POST(request: Request) {
         // ============================================================================
         // FALLBACK: Handle any other event types gracefully
         // ============================================================================
-        console.log(`[Webhook] Ignoring unhandled event type: ${eventType}`);
+        console.log(`[Webhook] Ignoring unhandled event type: ${eventType} `);
         return NextResponse.json({ message: `Event ${eventType} acknowledged but not processed` });
 
     } catch (error: any) {

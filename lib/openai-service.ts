@@ -130,7 +130,7 @@ export class OpenAIService {
                 salesPlan: "Schedule follow-up",
                 morgan_action: "Attempted to capture lead details",
                 team_action: "Follow up manually to verify information",
-                followUpEmail: "<p>Hi there,</p><p>Thanks for chatting with me. I know we covered a lot regarding your field operations.</p><p>I'd love to continue the conversation and show you how we can solve those efficiency challenges.</p><p>Best,<br>Morgan</p>"
+                followUpEmail: "<p>Hi there,</p><p>Thanks for chatting with me. I know we covered a lot regarding your field operations.</p><p>I'd love to continue the conversation and show you how we can solve those efficiency challenges.</p><p>Best,<br>Sarah</p>"
             };
         }
     }

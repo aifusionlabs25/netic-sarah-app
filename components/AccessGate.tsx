@@ -263,6 +263,29 @@ export default function AccessGate({ children }: AccessGateProps) {
                                     className="w-full px-6 py-3 bg-[#0A2F20] border border-emerald-800/50 rounded-full text-white placeholder-emerald-100/30 focus:outline-none focus:ring-1 focus:ring-emerald-400/50 transition-all font-sans"
                                 />
                                 <input
+                                    type="text"
+                                    placeholder="Company Name"
+                                    value={reqCompany}
+                                    onChange={e => setReqCompany(e.target.value)}
+                                    className="w-full px-6 py-3 bg-[#0A2F20] border border-emerald-800/50 rounded-full text-white placeholder-emerald-100/30 focus:outline-none focus:ring-1 focus:ring-emerald-400/50 transition-all font-sans"
+                                />
+                                <div className="grid grid-cols-2 gap-3">
+                                    <input
+                                        type="tel"
+                                        placeholder="Phone"
+                                        value={reqPhone}
+                                        onChange={e => setReqPhone(e.target.value)}
+                                        className="w-full px-6 py-3 bg-[#0A2F20] border border-emerald-800/50 rounded-full text-white placeholder-emerald-100/30 focus:outline-none focus:ring-1 focus:ring-emerald-400/50 transition-all font-sans"
+                                    />
+                                    <input
+                                        type="url"
+                                        placeholder="Website"
+                                        value={reqWebsite}
+                                        onChange={e => setReqWebsite(e.target.value)}
+                                        className="w-full px-6 py-3 bg-[#0A2F20] border border-emerald-800/50 rounded-full text-white placeholder-emerald-100/30 focus:outline-none focus:ring-1 focus:ring-emerald-400/50 transition-all font-sans"
+                                    />
+                                </div>
+                                <input
                                     type="email"
                                     placeholder="Company Email"
                                     value={reqEmail}

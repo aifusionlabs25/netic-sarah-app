@@ -51,7 +51,7 @@ export async function POST(request: Request) {
 <body>
     <div class="container">
         <div class="header">
-            <h2 style="margin: 0;">🚀 New Lead from Morgan AI Demo</h2>
+            <h2 style="margin: 0;">🚀 New Lead from Sarah AI</h2>
         </div>
         <div class="content">
             <div class="field">
@@ -80,7 +80,7 @@ export async function POST(request: Request) {
             </div>
         </div>
         <div class="footer">
-            Submitted via Morgan AI Demo • ${new Date().toLocaleString()}
+            Submitted via Sarah at Netic • ${new Date().toLocaleString()}
         </div>
     </div>
 </body>
@@ -94,7 +94,7 @@ export async function POST(request: Request) {
             try {
                 // 1. Send notification to you (aifusionlabs)
                 const { data, error } = await resend.emails.send({
-                    from: 'Morgan AI <noreply@aifusionlabs.app>',
+                    from: 'Sarah AI <noreply@aifusionlabs.app>',
                     to: ['aifusionlabs@gmail.com'],
                     subject: `New Lead: ${name} from ${company || 'Unknown Company'}`,
                     html: emailHtml,
@@ -128,14 +128,14 @@ export async function POST(request: Request) {
         </div>
         <div class="content">
             <p>Hi ${name},</p>
-            <p>We received your message and appreciate you taking the time to connect with us about GoDeskless.</p>
+            <p>We received your message and appreciate you taking the time to connect with us about Netic.</p>
             <p>One of our team members will be in touch shortly to discuss how we can help transform your field service operations.</p>
             <p>In the meantime, feel free to explore more about what we do:</p>
-            <a href="https://godeskless.com" class="button" style="color: white;">Visit GoDeskless</a>
-            <p style="margin-top: 25px;">Best regards,<br><strong>The GoDeskless Team</strong></p>
+            <a href="https://netic.ai" class="button" style="color: white;">Visit Netic</a>
+            <p style="margin-top: 25px;">Best regards,<br><strong>The Netic Team</strong></p>
         </div>
         <div class="footer">
-            <p>GoDeskless - AI-Powered Field Service Management</p>
+            <p>Netic - AI-Powered Revenue Automation</p>
             <p>This email was sent in response to your inquiry.</p>
         </div>
     </div>
@@ -144,7 +144,7 @@ export async function POST(request: Request) {
                 `.trim();
 
                 const { data: confirmData, error: confirmError } = await resend.emails.send({
-                    from: 'GoDeskless <noreply@aifusionlabs.app>',
+                    from: 'Netic <noreply@aifusionlabs.app>',
                     to: [email],
                     subject: `Thanks for reaching out, ${name}!`,
                     html: confirmationHtml,
